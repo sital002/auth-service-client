@@ -49,3 +49,26 @@ export async function signUp({
   const parsedData = loginResponse.parse(response.data);
   return parsedData;
 }
+
+type verifyEmailInput = {
+  verificationToken: string;
+  accessToken: string;
+};
+export async function verifyEmail({
+  verificationToken,
+  accessToken,
+}: verifyEmailInput) {
+  if (!verificationToken) throw new Error("Verification Token is required");
+  if (!accessToken) throw new Error("Access Token is missing");
+  const response = await axios.post(
+    `${SERVER_URL}/user/verify-email?token=${verificationToken}`,
+    {},
+    {
+      headers: {
+        "x-access-token": accessToken,
+      },
+    }
+  );
+  if (!response.data) throw new Error("Error verifying email");
+  return true;
+}
