@@ -2,8 +2,6 @@ import axios, { isAxiosError } from "axios";
 import z from "zod";
 import { AuthSDKError } from "./utils/api-error";
 
-const SERVER_URL = "http://localhost:3000";
-
 const loginResponse = z.object({
   access_token: z.string().min(1, "Access Token is required"),
 });
